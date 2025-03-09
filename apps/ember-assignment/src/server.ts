@@ -16,6 +16,34 @@ const main = async () => {
     return { addresses }
   })
 
+  server.get('/search/:q', async (request) => {
+    const { q } = request.params as { q: string }
+
+    const addresses = await prisma.address.findMany({
+      where: {
+        OR: [
+          {
+            address: {
+              contains: q,
+            },
+          },
+          {
+            country: {
+              contains: q,
+            },
+          },
+          {
+            zip: {
+              contains: q,
+            },
+          },
+        ]
+      },
+    })
+
+    return { addresses }
+  })
+
   server.get('/address/:id', async (request) => {
     const { id } = request.params as { id: string }
 

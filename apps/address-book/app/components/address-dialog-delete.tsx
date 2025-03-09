@@ -10,7 +10,7 @@ import {
 } from '~/components/ui/dialog'
 import { Button } from '~/components/ui/button'
 
-export function DialogDelete({
+export function AddressDialogDelete({
   id,
   children,
 }: {
@@ -28,7 +28,7 @@ export function DialogDelete({
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>
-          <Form action={`address/delete/${id}`} method="delete">
+          <Form action={`/address/delete/${id}`} method="delete">
             <Button type="submit" variant="destructive">
               Delete
             </Button>
