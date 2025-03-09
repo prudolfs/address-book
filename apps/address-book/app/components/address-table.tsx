@@ -13,8 +13,11 @@ import {
 import { Button } from '~/components/ui/button'
 import { AddressDialogDelete } from '~/components/address-dialog-delete'
 
-export function AddressTable({ addresses }: { addresses: Locations['addresses'] }) {
-
+export function AddressTable({
+  addresses,
+}: {
+  addresses: Locations['addresses']
+}) {
   return (
     <Table>
       <TableCaption>A list of addresses.</TableCaption>

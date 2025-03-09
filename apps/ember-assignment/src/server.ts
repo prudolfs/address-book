@@ -37,7 +37,7 @@ const main = async () => {
               contains: q,
             },
           },
-        ]
+        ],
       },
     })
 

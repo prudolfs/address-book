@@ -5,7 +5,7 @@ import { Button } from '~/components/ui/button'
 export default function SearchLayout() {
   return (
     <>
-      <div className="flex justify-space-between">
+      <div className="justify-space-between flex">
         <Form action="/search" method="get">
           <Input type="search" name="q" placeholder="Search..." />
         </Form>
