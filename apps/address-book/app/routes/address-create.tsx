@@ -23,16 +23,16 @@ export async function clientAction({ request }: Route.ActionArgs) {
 export default function AddressCreate() {
   return (
     <CentredContent title="Create Address">
-      <Form method="put" className="flex flex-col gap-6">
-        <div className="grid w-full max-w-sm items-center gap-1.5">
+      <Form method="put" className="w-sm md:w-md flex flex-col gap-6">
+        <div className="grid w-full max-w-md items-center gap-1.5">
           <Label htmlFor="address">Address</Label>
           <Input id="address" type="text" name="address" />
         </div>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
+        <div className="grid w-full max-w-md items-center gap-1.5">
           <Label htmlFor="country">Country</Label>
           <Input id="country" type="text" name="country" />
         </div>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
+        <div className="grid w-full max-w-md items-center gap-1.5">
           <Label htmlFor="zip">Zip</Label>
           <Input id="zip" type="text" name="zip" />
         </div>

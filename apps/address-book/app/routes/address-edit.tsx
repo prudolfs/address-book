@@ -33,8 +33,8 @@ export default function AddressEdit({ loaderData }: { loaderData: Location }) {
 
   return (
     <CentredContent title="Edit Address">
-      <Form method="put" className="flex flex-col gap-6">
-        <div className="grid w-full max-w-sm items-center gap-1.5">
+      <Form method="put" className="w-sm md:w-md flex flex-col gap-6">
+        <div className="grid w-full max-w-md items-center gap-1.5">
           <Label htmlFor="address">Address</Label>
           <Input
             id="address"
@@ -43,7 +43,7 @@ export default function AddressEdit({ loaderData }: { loaderData: Location }) {
             defaultValue={address}
           />
         </div>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
+        <div className="grid w-full max-w-md items-center gap-1.5">
           <Label htmlFor="country">Country</Label>
           <Input
             id="country"
@@ -52,7 +52,7 @@ export default function AddressEdit({ loaderData }: { loaderData: Location }) {
             defaultValue={country}
           />
         </div>
-        <div className="grid w-full max-w-sm items-center gap-1.5">
+        <div className="grid w-full max-w-md items-center gap-1.5">
           <Label htmlFor="zip">Zip</Label>
           <Input id="zip" type="text" name="zip" defaultValue={zip} />
         </div>
