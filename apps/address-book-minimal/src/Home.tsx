@@ -9,7 +9,7 @@ import {
   TableHead,
   TableHeader,
   TableRow,
-} from './components/ui/table'
+} from '@/components/ui/table'
 import {
   Dialog,
   DialogContent,
@@ -17,9 +17,9 @@ import {
   DialogHeader,
   DialogTitle,
   DialogFooter,
-} from './components/ui/dialog'
-import { Button } from './components/ui/button'
-import { Locations } from './types'
+} from '@/components/ui/dialog'
+import { Button } from '@/components/ui/button'
+import { Locations } from '@/types'
 
 async function getAddresses(): Promise<Locations> {
   const res = await fetch('http://localhost:4001')
