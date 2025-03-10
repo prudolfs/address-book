@@ -21,7 +21,6 @@ import {
 import { Button } from './components/ui/button'
 import { Locations } from './types'
 
-
 async function getAddresses(): Promise<Locations> {
   const res = await fetch('http://localhost:4001')
 
@@ -51,7 +50,7 @@ function Home() {
     mutationFn: deleteAddress,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['addresses'] })
-    }
+    },
   })
   const [deleteId, setDeleteId] = useState<number | null>(null)
   const isPending = query.isPending || mutation.isPending
@@ -61,7 +60,7 @@ function Home() {
 
   if (isPending) {
     return (
-      <p className="flex justify-center items-center w-screen h-screen">
+      <p className="flex h-screen w-screen items-center justify-center">
         Loading...
       </p>
     )
@@ -69,7 +68,7 @@ function Home() {
 
   if (isError) {
     return (
-      <p className="flex justify-center items-center w-screen h-screen">
+      <p className="flex h-screen w-screen items-center justify-center">
         Error: {error?.message}
       </p>
     )
