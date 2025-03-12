@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { TrashIcon } from '@heroicons/react/24/outline'
+import { TrashIcon, PencilSquareIcon } from '@heroicons/react/24/outline'
 import {
   Table,
   TableBody,
@@ -18,11 +18,42 @@ import {
   DialogTitle,
   DialogFooter,
 } from '@/components/ui/dialog'
+import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { Locations } from '@/types'
 
 async function getAddresses(): Promise<Locations> {
   const res = await fetch('http://localhost:4001')
+
+  if (!res.ok) {
+    throw new Error('Network response was not ok')
+  }
+
+  return res.json()
+}
+
+async function updateAddress({
+  id,
+  editAddress,
+  editCountry,
+  editZip,
+}: {
+  id: number
+  editAddress: string
+  editCountry: string
+  editZip: string
+}) {
+  const res = await fetch(`http://localhost:4001/address/edit/${id}`, {
+    method: 'PUT',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      address: editAddress,
+      country: editCountry,
+      zip: editZip,
+    }),
+  })
 
   if (!res.ok) {
     throw new Error('Network response was not ok')
@@ -52,7 +83,17 @@ function Home() {
       queryClient.invalidateQueries({ queryKey: ['addresses'] })
     },
   })
+  const updateMutation = useMutation({
+    mutationFn: updateAddress,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['addresses'] })
+    },
+  })
   const [deleteId, setDeleteId] = useState<number | null>(null)
+  const [editId, setEditId] = useState<number | null>(null)
+  const [editAddress, setEditAddress] = useState<string>('')
+  const [editCountry, setEditCountry] = useState<string>('')
+  const [editZip, setEditZip] = useState<string>('')
   const isPending = query.isPending || mutation.isPending
   const isError = query.isError || mutation.isError
   const error = query.error || mutation.error
@@ -84,20 +125,74 @@ function Home() {
             <TableHead>Country</TableHead>
             <TableHead>Zip</TableHead>
             <TableHead>Delete</TableHead>
+            <TableHead>Edit</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
           {data?.addresses.map((address) => (
             <TableRow key={address.id}>
-              <TableCell>{address.address}</TableCell>
-              <TableCell>{address.country}</TableCell>
-              <TableCell>{address.zip}</TableCell>
+              <TableCell>
+                {address.id === editId ? (
+                  <Input
+                    value={editAddress}
+                    onChange={(e) => setEditAddress(e.currentTarget.value)}
+                  />
+                ) : (
+                  address.address
+                )}
+              </TableCell>
+              <TableCell>
+                {address.id === editId ? (
+                  <Input
+                    value={editCountry}
+                    onChange={(e) => setEditCountry(e.currentTarget.value)}
+                  />
+                ) : (
+                  address.country
+                )}
+              </TableCell>
+              <TableCell>
+                {address.id === editId ? (
+                  <Input
+                    value={editZip}
+                    onChange={(e) => setEditZip(e.currentTarget.value)}
+                  />
+                ) : (
+                  address.zip
+                )}
+              </TableCell>
               <TableCell>
                 <Button
                   variant="destructive"
                   onClick={() => setDeleteId(address.id)}
                 >
                   <TrashIcon />
+                </Button>
+              </TableCell>
+              <TableCell>
+                <Button
+                  variant="default"
+                  onClick={() => {
+                    if (editId) {
+                      updateMutation.mutate({
+                        id: editId,
+                        editAddress,
+                        editCountry,
+                        editZip,
+                      })
+                      setEditAddress('')
+                      setEditCountry('')
+                      setEditZip('')
+                      setEditId(null)
+                    } else {
+                      setEditAddress(address.address)
+                      setEditCountry(address.country)
+                      setEditZip(address.zip)
+                      setEditId(address.id)
+                    }
+                  }}
+                >
+                  <PencilSquareIcon />
                 </Button>
               </TableCell>
             </TableRow>
